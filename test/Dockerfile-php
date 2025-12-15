@@ -1,0 +1,24 @@
+FROM debian:bookworm
+
+# 1) Install PHP-FPM + MySQL extension + curl
+RUN apt-get update && \
+    apt-get install -y php-fpm php-mysql curl && \
+    rm -rf /var/lib/apt/lists/*
+
+# 2) Make php-fpm listen on TCP 0.0.0.0:9000 instead of a unix socket
+RUN sed -i 's|^listen = .*|listen = 0.0.0.0:9000|' /etc/php/*/fpm/pool.d/www.conf
+
+# 3) Create web root and download WordPress into it
+RUN mkdir -p /var/www/html && \
+    curl -o /tmp/wordpress.tar.gz https://wordpress.org/latest.tar.gz && \
+    tar -xzf /tmp/wordpress.tar.gz -C /tmp && \
+    cp -r /tmp/wordpress/* /var/www/html && \
+    chown -R www-data:www-data /var/www/html && \
+    rm -rf /tmp/wordpress /tmp/wordpress.tar.gz
+
+WORKDIR /var/www/html
+
+EXPOSE 9000
+
+# 4) Run php-fpm in the foreground (note the 8.2)
+CMD ["php-fpm8.2", "-F"]
