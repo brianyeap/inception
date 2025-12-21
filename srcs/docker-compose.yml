@@ -10,12 +10,31 @@ services:
     env_file:
       - .env
 
+  wordpress:
+    container_name: wordpress
+    depends_on:
+      - mariadb
+    build: ./requirements/wordpress
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - network
+    restart: always
+    env_file:
+      - .env
+
 # volumes:
 #   mariadb_data:
 #     driver: local
 #     driver_opts:
 #       type: none
 #       device: /home/inception/data/mysql
+#       o: bind
+#   wordpress_data:
+#     driver: local
+#     driver_opts:
+#       type: none
+#       device: /home/inception/data/wordpress
 #       o: bind
 
 volumes:
