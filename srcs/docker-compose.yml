@@ -15,7 +15,7 @@ services:
 #     driver: local
 #     driver_opts:
 #       type: none
-#       device: /home/vbachele/data/mysql
+#       device: /home/inception/data/mysql
 #       o: bind
 
 volumes:
