@@ -1,0 +1,18 @@
+FROM debian:bookworm
+
+RUN apt update; \
+	apt install -y nginx openssl
+
+# -x509 (self sign), -nodes (no encryption), 
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+	-keyout /etc/ssl/private/bryeap.key \
+	-out /etc/ssl/certs/bryeap.crt \
+	-subj="/CN=bryeap.42.fr"
+
+COPY ./tools/certs.sh /usr/local/bin/certs.sh
+
+RUN chmod +x /usr/local/bin/certs.sh
+
+COPY ./conf/default /etc/nginx/sites-available/default
+
+ENTRYPOINT ["/usr/local/bin/certs.sh"]

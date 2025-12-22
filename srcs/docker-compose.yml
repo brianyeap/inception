@@ -22,24 +22,33 @@ services:
     restart: always
     env_file:
       - .env
-
-# volumes:
-#   mariadb_data:
-#     driver: local
-#     driver_opts:
-#       type: none
-#       device: /home/inception/data/mysql
-#       o: bind
-#   wordpress_data:
-#     driver: local
-#     driver_opts:
-#       type: none
-#       device: /home/inception/data/wordpress
-#       o: bind
+  nginx:
+    build: ./requirements/nginx
+    image: nginx
+    container_name: nginx
+    volumes:
+      - wordpress_data:/var/www/html
+    ports:
+      - 443:443
+    networks:
+      - network
+    depends_on:
+      - wordpress
+    restart: always
 
 volumes:
   mariadb_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/parallels/data/mysql
+      o: bind
   wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/parallels/data/wordpress
+      o: bind
 
 networks:
   network:
