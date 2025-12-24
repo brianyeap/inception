@@ -13,6 +13,7 @@ if [ ! -f /var/www/html/wp-config.php ]; then
 
     wp option update comments_notify 0 --allow-root
     wp option update moderation_notify 0 --allow-root
+    wp option update comment_moderation 0 --allow-root
 
     wp user create $WP_USER $WP_USER_EMAIL --role=author --user_pass=$WP_USER_PASSWORD --allow-root
 
