@@ -50,6 +50,10 @@ volumes:
       device: /home/parallels/data/wordpress
       o: bind
 
+# volumes:
+#   mariadb_data:
+#   wordpress_data:
+
 networks:
   network:
     driver: bridge
