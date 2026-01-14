@@ -38,23 +38,23 @@ services:
       - wordpress
     restart: always
 
-# volumes:
-#   mariadb_data:
-#     driver: local
-#     driver_opts:
-#       type: none
-#       device: /home/parallels/data/mysql
-#       o: bind
-#   wordpress_data:
-#     driver: local
-#     driver_opts:
-#       type: none
-#       device: /home/parallels/data/wordpress
-#       o: bind
-
 volumes:
   mariadb_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/bryeap/data/mysql
+      o: bind
   wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/bryeap/data/wordpress
+      o: bind
+
+# volumes:
+#   mariadb_data:
+#   wordpress_data:
 
 networks:
   network:
