@@ -3,6 +3,8 @@ DATA_DIR = /home/bryeap/data
 MYSQL_DIR = $(DATA_DIR)/mysql
 WP_DIR = $(DATA_DIR)/wordpress
 
+.DEFAULT_GOAL := all
+
 .PHONY: all re down clean fclean prepare
 
 prepare:
