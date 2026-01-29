@@ -3,7 +3,7 @@ FROM debian:bookworm
 RUN apt update; \ 
 	apt install -y nginx openssl
 
-# -x509 (self sign), -nodes (no encryption), 
+# -x509 (self sign), -nodes (no encryption, no passphrase on the key), new 2048-bit RSA key
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 	-keyout /etc/ssl/private/bryeap.key \
 	-out /etc/ssl/certs/bryeap.crt \

@@ -42,11 +42,11 @@ volumes:
   mariadb_data:
     driver: local
     driver_opts:
-      type: none
-      device: /home/bryeap/data/mysql
-      o: bind
+      type: none # Just a normal directory
+      device: /home/bryeap/data/mysql # path on the host machine
+      o: bind 
   wordpress_data:
-    driver: local
+    driver: locald
     driver_opts:
       type: none
       device: /home/bryeap/data/wordpress

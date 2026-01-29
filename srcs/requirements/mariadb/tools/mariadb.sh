@@ -12,7 +12,7 @@ SOCKET=$RUNDIR/mysqld.sock
 MARKER=$DATADIR/.inception_initialized
 
 mkdir -p "$RUNDIR"
-chown -R mysql:mysql "$RUNDIR"
+chown -R mysql:mysql "$RUNDIR" # change ownership recuresively
 
 # Init only if we have not successfully done the SQL setup yet
 if [ ! -f "$MARKER" ]; then
@@ -27,12 +27,12 @@ if [ ! -f "$MARKER" ]; then
 
   # Wait until the socket server is ready
   for i in $(seq 1 30); do
-    mariadb-admin --socket="$SOCKET" ping >/dev/null 2>&1 && break
+    mariadb-admin --socket="$SOCKET" ping >/dev/null 2>&1 && break # send stderr to /dev/null as well
     [ "$i" -eq 30 ] && echo "Temp MariaDB not ready" && exit 1
     sleep 1
   done
 
-  # Run init SQL
+  # Run init SQL using mysql root user
   mariadb --socket="$SOCKET" -uroot <<-SQL
     CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;
     CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';

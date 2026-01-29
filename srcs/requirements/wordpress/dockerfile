@@ -1,5 +1,6 @@
 FROM debian:bookworm
 
+# php fpm is bridge between nginx and php
 RUN apt-get update && apt-get install -y --no-install-recommends \
 	php-fpm \
 	php-mysql \
@@ -14,6 +15,8 @@ RUN curl -fsSL https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-
     && chmod +x /usr/local/bin/wp
 
 # Disable PHP mail() for both CLI and FPM so nothing blocks
+# -x is print commands as they are executed
+# writting sendmail_path = /bin/true\n to $d/99-disable-mail.ini
 RUN set -eux; \
   for d in /etc/php/*/fpm/conf.d /etc/php/*/cli/conf.d; do \
     mkdir -p "$d"; \
