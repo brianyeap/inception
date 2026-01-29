@@ -1,4 +1,4 @@
-FROM debian:bookworm
+FROM debian:bullseye
 
 RUN apt update; \ 
 	apt install -y nginx openssl
@@ -9,10 +9,6 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 	-out /etc/ssl/certs/bryeap.crt \
 	-subj="/CN=bryeap.42.fr"
 
-COPY ./tools/certs.sh /usr/local/bin/certs.sh
-
-RUN chmod +x /usr/local/bin/certs.sh
-
 COPY ./conf/default /etc/nginx/sites-available/default
 
-ENTRYPOINT ["/usr/local/bin/certs.sh"]
+CMD ["nginx", "-g", "daemon off;"]

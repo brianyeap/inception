@@ -37,6 +37,8 @@ services:
     depends_on:
       - wordpress
     restart: always
+    env_file:
+      - .env
 
 volumes:
   mariadb_data:
@@ -46,7 +48,7 @@ volumes:
       device: /home/bryeap/data/mysql # path on the host machine
       o: bind 
   wordpress_data:
-    driver: locald
+    driver: local
     driver_opts:
       type: none
       device: /home/bryeap/data/wordpress
