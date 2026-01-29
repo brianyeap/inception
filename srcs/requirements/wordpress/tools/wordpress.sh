@@ -30,4 +30,5 @@ if [ ! -f /var/www/html/wp-config.php ]; then
     wp theme update twentyfifteen --allow-root
 fi
 
-exec php-fpm8.2 -F
+# php-fpm version matches the default PHP packaged with Debian Bullseye (7.4)
+exec php-fpm7.4 -F
