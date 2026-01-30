@@ -1,6 +1,16 @@
 COMPOSE = docker compose -f ./srcs/docker-compose.yml
+DATA_DIR = /home/bryeap/data
+MYSQL_DIR = $(DATA_DIR)/mysql
+WP_DIR = $(DATA_DIR)/wordpress
 
-all:
+.DEFAULT_GOAL := all
+
+.PHONY: all re down clean fclean prepare
+
+prepare:
+	@mkdir -p $(MYSQL_DIR) $(WP_DIR)
+
+all: prepare
 	@$(COMPOSE) up -d --build
 
 down:
@@ -14,5 +24,3 @@ clean:
 
 fclean:
 	@$(COMPOSE) down -v --remove-orphans
-
-.PHONY: all re down clean fclean
